@@ -12,3 +12,4 @@ dfa识别，递归下降分析四则运算，c语言实现
 <term'> ::= * <factor> <term'> | / <factor> <term'> | ε
 <factor> ::= <number> | ( <expression> )
 
+使用vs2022编写，直接打开sln文件
