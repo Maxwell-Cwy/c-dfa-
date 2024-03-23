@@ -9,7 +9,7 @@ char chbuf[100];
 int count = 0;
 int num = 0;
 
-int isdigit(char ch) {
+int Isdigit(char ch) {
     if (ch < 58 && ch>47) {
         return 1;
     }
@@ -19,7 +19,7 @@ int isdigit(char ch) {
 }
 
 State DFA(char* input) {
-    if (isdigit(*input)) {
+    if (Isdigit(*input)) {
         chbuf[count] = *input;
         count++;
         return DIGIT;
@@ -51,7 +51,7 @@ void analays(char* p, State current) {
     int i;
     for (i = 0; *p != '\0'; i++) {
         current = DFA(p);
-        if (current == DIGIT && (!isdigit(*(p + 1)))) {
+        if (current == DIGIT && (!Isdigit(*(p + 1)))) {
             printf("digit:%s\n", chbuf);
             strcpy(token[num].value, chbuf);
             token[num].id = 1;
@@ -84,7 +84,7 @@ void analays(char* p, State current) {
             count = 0;
         }
         if (current == ERROR) {
-            printf("invalid!\n");
+            printf("invalid char!\n");
             memset(chbuf, 0, sizeof(chbuf));
             count = 0;
             exit(1);

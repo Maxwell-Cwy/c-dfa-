@@ -1,29 +1,30 @@
 #include "parse.h"
 #include "dfa.h"
-
+#include <stdlib.h>
+#include <stdio.h>
 Token* t = token;
 
-int exp() {
+int expr() {
     int result_e, t1;
     t1 = term();
-    result_e = exp_p(t1);
+    result_e = expr_p(t1);
     return result_e;
 }
 
-int exp_p(int temp) {//A(+B)(+C)
+int expr_p(int temp) {//A(+B)(+C)
     int result_ep, t1, t2;
     if (t->id == 2 && t->value[0] == '+') {
         t++;
         t1 = term();
         t2 = temp + t1;
-        result_ep = exp_p(t2);
+        result_ep = expr_p(t2);
         return result_ep;
     }
     if (t->id == 2 && t->value[0] == '-') {
         t++;
         t1 = term();
         t2 = temp - t1;
-        result_ep = exp_p(t2);
+        result_ep = expr_p(t2);
         return result_ep;
     }
     else {
@@ -70,12 +71,13 @@ int factor() {
     }
     if (t->id == 3) {//识别出左括号字符
         t++;
-        result_f = exp(t);//识别出表达式，指针+1;
+        result_f = expr(t);//识别出表达式，指针+1;
         if (t->id == 4) //识别出右括号字符
             t++;
         return result_f;
     }
     else {
-        printf("parse error!");
+        printf("parse error!\n");
+        exit(1);
     }
 }
